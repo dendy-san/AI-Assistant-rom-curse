@@ -1,1 +1,1 @@
-# AI-Assistant-rom-curse
+# AI-Assistant-from-curse
