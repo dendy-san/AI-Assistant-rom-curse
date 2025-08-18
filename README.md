@@ -1,1 +1,1 @@
-# AI-Assistant-from-curse
+# AI-Assistant-from-course
