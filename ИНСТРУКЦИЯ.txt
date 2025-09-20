@@ -11,16 +11,24 @@
 
 ИСПОЛЬЗОВАНИЕ:
 
-Вариант 1 - Простой запуск (рекомендуется):
-   python3 run_for_real_files.py
+🎯 РЕКОМЕНДУЕМЫЙ СПОСОБ - Универсальный обработчик:
+   python3 universal_processor.py <ваш_архив_или_папка>
 
-Вариант 2 - С указанием пути:
-   python3 run_for_real_files.py "d:\001\Kursis\Kurs_from_Cursor\Организации\00"
+Примеры:
+   python3 universal_processor.py организации.zip
+   python3 universal_processor.py папка_с_файлами/
+   python3 universal_processor.py отдельный_файл.xlsx
 
-Вариант 3 - Копирование файлов:
-   1. Создайте папку: mkdir excel_files
-   2. Скопируйте ваши .xlsx файлы в эту папку
-   3. Запустите: python3 run_for_real_files.py excel_files
+Альтернативные способы:
+
+Вариант 1 - Только ZIP архивы:
+   python3 simple_archive_processor.py архив.zip
+
+Вариант 2 - Папка с файлами:
+   python3 run_for_real_files.py путь_к_папке
+
+Вариант 3 - Полнофункциональный архивный процессор:
+   python3 process_archive.py архив.zip  # Поддерживает ZIP, RAR, 7Z
 
 ЧТО ДЕЛАЕТ СКРИПТ:
 ✓ Читает все файлы .xlsx из указанной директории
