@@ -290,26 +290,51 @@ def main():
     """
     Основная функция
     """
-    # Путь к директории с файлами (замените на актуальный)
-    directory_path = r"d:\001\Kursis\Kurs_from_Cursor\Организации\00"
+    import sys
     
-    # Для Linux/Unix систем путь может быть другим
-    if os.name != 'nt':  # Если не Windows
-        # Попробуем найти смонтированный диск или используем рабочую директорию
-        possible_paths = [
-            "/mnt/d/001/Kursis/Kurs_from_Cursor/Организации/00",
-            "/workspace/test_data",  # Для тестирования
-            "/workspace"
-        ]
+    # Если передан аргумент командной строки, используем его как путь
+    if len(sys.argv) > 1:
+        directory_path = sys.argv[1]
+    else:
+        # Путь к директории с файлами (замените на актуальный)
+        directory_path = r"d:\001\Kursis\Kurs_from_Cursor\Организации\00"
         
-        for path in possible_paths:
-            if os.path.exists(path):
-                directory_path = path
-                break
-        else:
-            print(f"Директория не найдена. Создаем тестовые данные в /workspace/test_data")
-            directory_path = "/workspace/test_data"
-            create_test_data(directory_path)
+        # Для Linux/Unix систем путь может быть другим
+        if os.name != 'nt':  # Если не Windows
+            # Попробуем найти смонтированный диск или используем рабочую директорию
+            possible_paths = [
+                "/mnt/d/001/Kursis/Kurs_from_Cursor/Организации/00",
+                "/workspace/excel_files",  # Директория для пользовательских файлов
+                "/workspace/test_data",    # Для тестирования
+                "/workspace"
+            ]
+            
+            for path in possible_paths:
+                if os.path.exists(path) and any(Path(path).glob("*.xlsx")):
+                    directory_path = path
+                    logger.info(f"Найдена директория с Excel файлами: {path}")
+                    break
+            else:
+                print(f"""
+ИНСТРУКЦИЯ ПО ИСПОЛЬЗОВАНИЮ:
+
+1. Скопируйте ваши Excel файлы в директорию /workspace/excel_files/
+2. Или запустите скрипт с указанием пути: python3 process_excel_files.py /path/to/your/files
+3. Для тестирования будут созданы примеры файлов в /workspace/test_data
+
+Пример файлов, которые ожидает скрипт:
+- ольгинка + 3км.xlsx
+- другие файлы с расширением .xlsx
+
+Создаем тестовые данные для демонстрации...
+""")
+                directory_path = "/workspace/test_data"
+                create_test_data(directory_path)
+    
+    if not os.path.exists(directory_path):
+        print(f"ОШИБКА: Директория {directory_path} не существует!")
+        print("Создайте директорию и поместите в неё файлы Excel, или укажите правильный путь.")
+        return
     
     processor = ExcelProcessor(directory_path)
     processor.process()
